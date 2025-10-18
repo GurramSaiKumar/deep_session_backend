@@ -159,8 +159,13 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-# SendGrid Email Configuration
-SENDGRID_API_KEY = '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'  
+
+
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
