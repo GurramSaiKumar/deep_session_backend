@@ -137,13 +137,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS SES SMTP Settings
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'AKIATNVEVK6CCBDC4NES'
-# EMAIL_HOST_PASSWORD = 'BOr2Stw/APM7r+udsuiw6oduKRXRR4t3Q/DVEMgpfbTD'
-# DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'AKIATNVEVK6CCBDC4NES'
+EMAIL_HOST_PASSWORD = 'BOr2Stw/APM7r+udsuiw6oduKRXRR4t3Q/DVEMgpfbTD'
+DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'
 # DEFAULT_FROM_EMAIL = 'saikumar01.g@gmail.com'
 
 # Celery Config

@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User, OTP
-from django.conf import settings
 from .serializers import SendOTPSerializer, VerifyOTPSerializer
 
 class SendOTPView(APIView):
@@ -27,7 +26,8 @@ class SendOTPView(APIView):
             send_mail(
                 subject="ddhyaan app OTP",
                 message=f"Your OTP is {code}. It expires in 10 minutes.",
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email="no-reply@ddhyaan.app",
+                # from_email="saikumar01.g@gmail.com",
                 recipient_list=[email],
                 fail_silently=False,
             )
@@ -58,7 +58,7 @@ class VerifyOTPView(APIView):
             user.save()
             return Response({
                 'message': 'OTP verified successfully',
-                'user': {'id': str(user.user_id), 'email': user.email}
+                'user': {'id': str(user.id), 'email': user.email}
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
@@ -66,4 +66,4 @@ class VerifyOTPView(APIView):
 
 class HealthCheckView(APIView):
     def get(self, request):
-        return Response({'status': 'Success'}, status=status.HTTP_200_OK)
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)
