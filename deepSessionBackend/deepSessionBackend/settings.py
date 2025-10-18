@@ -137,13 +137,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS SES SMTP Settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'AKIATNVEVK6CCBDC4NES'
-EMAIL_HOST_PASSWORD = 'BOr2Stw/APM7r+udsuiw6oduKRXRR4t3Q/DVEMgpfbTD'
-DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'AKIATNVEVK6CCBDC4NES'
+# EMAIL_HOST_PASSWORD = 'BOr2Stw/APM7r+udsuiw6oduKRXRR4t3Q/DVEMgpfbTD'
+# DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'
 # DEFAULT_FROM_EMAIL = 'saikumar01.g@gmail.com'
 
 # Celery Config
@@ -158,3 +158,14 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=18, minute=35),  # 12:05 AM IST = 18:35 UTC
     },
 }
+
+# SendGrid Email Configuration
+SENDGRID_API_KEY = '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'  
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'  # Verified domain
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
