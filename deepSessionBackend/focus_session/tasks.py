@@ -2,7 +2,7 @@
 from celery import shared_task
 from django.contrib.auth import get_user_model
 from .models import FocusSession
-from login.models import User
+from deepSessionBackend.login.models import User
 from .utils import generate_focus_report_pdf, send_focus_report_email
 from datetime import date, timedelta
 

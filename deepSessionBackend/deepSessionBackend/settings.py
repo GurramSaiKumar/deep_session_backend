@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -24,13 +23,14 @@ SECRET_KEY = 'django-insecure-wp&z32_08heu74e#go&x#*u68)8iptoj(_rb+xb%om-vi&v7&y
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+from datetime import timedelta
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,14 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'login', 
+    'login',
     'focus_session',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -72,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'deepSessionBackend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -86,14 +87,13 @@ WSGI_APPLICATION = 'deepSessionBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  
-        'USER': 'postgres',  
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': 'Sridevi7674',
         'HOST': 'ddhyaan-db.chigymwgmjw0.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -113,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -124,7 +123,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -159,10 +157,9 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-
-
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
@@ -174,3 +171,39 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = 'no-reply@ddhyaan.com'  # Verified domain
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8001',  # Your local UI server
+    'https://api.ddhyaan.com',  # Your backend domain (if self-calls)
+    'http://13.201.9.195:8001',  # EC2 UI if needed
+]
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE']  # Allow your API methods
+CORS_ALLOW_HEADERS = ['*']  # Allow all headers for MVP (restrict later)
+CORS_ALLOW_CREDENTIALS = True  # If using sessions/cookies
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'email',  # Use email as the identifier
+    'USER_ID_CLAIM': 'email',  # Match the claim name
+}
+
+AUTH_USER_MODEL = 'login.User'

@@ -1,12 +1,18 @@
-import random, datetime
-from django.utils import timezone
-from django.core.mail import send_mail
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import User, OTP
-from .serializers import SendOTPSerializer, VerifyOTPSerializer
+import datetime
+import random
+
 from django.conf import settings
+from django.core.mail import send_mail
+from django.utils import timezone
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .models import OTP, User
+from .serializers import SendOTPSerializer
+from .serializers import VerifyOTPSerializer
+
 
 class SendOTPView(APIView):
     def post(self, request):
@@ -57,9 +63,17 @@ class VerifyOTPView(APIView):
             otp.save()
             user.last_login = timezone.now()
             user.save()
+
+            # Generate JWT tokens
+            refresh = RefreshToken.for_user(user)
+            # Set the user in request for subsequent views
+            request.user = user  # This sets the user context for the request
+
             return Response({
                 'message': 'OTP verified successfully',
-                'user': {'id': str(user.user_id), 'email': user.email}
+                'user': {'user_id': str(user.user_id), 'email': user.email},
+                'access_token': str(refresh.access_token),
+                'refresh_token': str(refresh),
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)

@@ -11,6 +11,7 @@ class StartFocusSessionView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        print("user is ", request.user)
         active_session = FocusSession.objects.filter(user=request.user, status='active').first()
         if active_session:
             return Response({"detail": "You already have an active session."}, status=status.HTTP_400_BAD_REQUEST)

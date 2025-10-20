@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+
 class FocusSession(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
