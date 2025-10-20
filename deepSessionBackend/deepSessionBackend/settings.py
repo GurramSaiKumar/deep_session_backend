@@ -172,7 +172,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8001',  # Your local UI server
+    "http://localhost:3000",  # Your local UI server
     'https://api.ddhyaan.com',  # Your backend domain (if self-calls)
     'http://13.201.9.195:8001',  # EC2 UI if needed
 ]
