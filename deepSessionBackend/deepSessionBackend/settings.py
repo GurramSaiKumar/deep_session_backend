@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-wp&z32_08heu74e#go&x#*u68)8iptoj(_rb+xb%om-vi&v7&y
 DEBUG = True
 from datetime import timedelta
 
-ALLOWED_HOSTS = []
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -207,3 +205,5 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'login.NewUser'
+
+ALLOWED_HOSTS = ['api.ddhyaan.com', '13.201.9.195', 'localhost', '127.0.0.1']
