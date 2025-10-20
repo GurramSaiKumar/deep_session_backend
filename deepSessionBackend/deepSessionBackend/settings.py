@@ -206,4 +206,4 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'email',  # Match the claim name
 }
 
-AUTH_USER_MODEL = 'login.User'
+AUTH_USER_MODEL = 'login.NewUser'

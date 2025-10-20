@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import FocusSession
+from .models import NewFocusSession
 
 class FocusSessionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FocusSession
+        model = NewFocusSession
         fields = '__all__'
