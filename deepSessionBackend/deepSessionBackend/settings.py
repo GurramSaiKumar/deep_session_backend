@@ -175,6 +175,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your local UI server
     'https://api.ddhyaan.com',  # Your backend domain (if self-calls)
     'http://13.201.9.195:8001',  # EC2 UI if needed
+    "https://ddhyaan.com",  # Your production frontend
 ]
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE']  # Allow your API methods
 CORS_ALLOW_HEADERS = ['*']  # Allow all headers for MVP (restrict later)
